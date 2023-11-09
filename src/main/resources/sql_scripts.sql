@@ -19,7 +19,7 @@ CREATE TABLE user_data
     middle_name   VARCHAR(64),
     last_name     VARCHAR(64),
     birth_date    DATE,
-    phone_number  VARCHAR(32),
+    phone_number  VARCHAR(32) UNIQUE,
     avatar        VARCHAR(64),
 
     role          VARCHAR(32),
@@ -31,11 +31,11 @@ CREATE TABLE user_address
 (
     id           BIGSERIAL PRIMARY KEY,
     house_number VARCHAR(16)        NOT NULL,
-    street       VARCHAR(128)       NOT NULL,
-    city         VARCHAR(128)       NOT NULL,
+    street       VARCHAR(64)       NOT NULL,
+    city         VARCHAR(64)       NOT NULL,
     postal_code  VARCHAR(16),
     country      VARCHAR(128),
-    user_id      BIGINT,
+    user_id      BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_data (id) ON DELETE CASCADE
 );
 
@@ -43,11 +43,11 @@ CREATE TABLE user_address
 CREATE TABLE user_payment
 (
     id           BIGSERIAL PRIMARY KEY,
-    payment_type VARCHAR(32),
+    payment_type VARCHAR(64),
     provider     VARCHAR(64),
     account_no   VARCHAR(128),
     expire_date  DATE,
-    user_id      BIGINT,
+    user_id      BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_data (id) ON DELETE CASCADE
 );
 
