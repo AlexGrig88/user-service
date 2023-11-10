@@ -16,17 +16,17 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "addressSet")
-@EqualsAndHashCode(exclude = "addressSet")
+@ToString(exclude = { "addressSet", "paymentList", "roles" })
+@EqualsAndHashCode(of = { "username", "email" } )
 @Entity
 @Table(name = "user_data")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false, unique = true)
@@ -35,29 +35,34 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Embedded
-    @AttributeOverride(name = "phone", column = @Column(name = "phone_number", unique = true))
-    private PersonalInfo personalInfo;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
+    @ManyToMany
+    @JoinTable(name = "user_role",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
+    @Column(name = "registered_at")
     private LocalDateTime registeredAt;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Address> addressSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> paymentList = new ArrayList<>();
 
     public void addAddress(Address address) {
         addressSet.add(address);
-        address.setUser(this);
+        address.setUserEntity(this);
     }
 
     public void addPayment(Payment payment) {
         paymentList.add(payment);
-        payment.setUser(this);
+        payment.setUserEntity(this);
     }
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUserEntities().add(this);
+    }
+
 
 }
