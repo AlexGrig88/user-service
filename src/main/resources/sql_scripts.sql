@@ -1,8 +1,8 @@
-CREATE DATABASE online_shopping;
+CREATE DATABASE electronic_store_userdb;
 
-CREATE SCHEMA electronics_store;
+CREATE SCHEMA users_schema;
 
-SET search_path TO electronics_store, public;
+SET search_path TO users_schema, public;
 
 DROP TABLE if exists user_address;
 DROP TABLE if exists user_payment;

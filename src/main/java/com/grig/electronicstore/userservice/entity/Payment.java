@@ -1,5 +1,6 @@
 package com.grig.electronicstore.userservice.entity;
 
+import com.grig.electronicstore.userservice.entity.enums.PaymentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +32,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 32)
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
     @Column(nullable = false)

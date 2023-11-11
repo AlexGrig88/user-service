@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/online_shopping
+    url: jdbc:postgresql://localhost:5432/electronic_store_userdb
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -8,7 +8,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        default_schema: electronics_store
+        default_schema: users_schema
         format_sql: true
         show_sql: true
         hbm2ddl:

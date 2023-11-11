@@ -1,4 +1,4 @@
-package com.grig.electronicstore.userservice.entity;
+package com.grig.electronicstore.userservice.entity.enums;
 
 public enum PaymentType {
     BANK_CARD,

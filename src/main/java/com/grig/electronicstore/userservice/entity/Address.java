@@ -18,7 +18,6 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "userEntity")
 @EqualsAndHashCode(of = "contactPhone" )
 @Entity
 @Table(name = "user_address")
